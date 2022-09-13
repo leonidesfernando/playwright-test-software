@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "allowJs": true,
+    "sourceMap": true,
+    "module": "commonjs",
+    "lib": ["es2020", "DOM"],
+    "declaration": true,
+    "outDir": "./dist/",
+    "strict": true,
+    "strictNullChecks": true,
+    "moduleResolution": "node",
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+  },
+  "include": ["./src/**/*"],
+  "exclude": ["node_modules", ".vscode"]
+}

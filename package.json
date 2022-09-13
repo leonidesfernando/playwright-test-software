@@ -1,0 +1,25 @@
+{
+  "name": "playwright-test-software",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@faker-js/faker": "^7.5.0",
+    "@playwright/test": "^1.25.2",
+    "allure-commandline": "^2.18.1",
+    "allure-playwright": "^2.0.0-beta.19",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.8.3",
+    "ua-parser-js": "^1.0.2"
+  },
+  "scripts": {
+    "clean": "rimraf dist/*, test-results/*, allure-results/*, playwright-report/*",
+    "build": "npm run clean && tsc",
+    "allure:generate": "npx allure generate ./allure-results --clean",
+    "allure:open": "npx allure open ./allure-report",
+    "allure:serve": "npx allure serve"
+  }
+}
