@@ -1,3 +1,5 @@
+//@ts-check
+
 import * as genData from "@faker-js/faker";
 
 let CATEGORIES:string[] = ['ALIMENTACAO', 'SALARIO', 'LAZER'

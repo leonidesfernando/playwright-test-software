@@ -9,6 +9,10 @@ Beyond the web app running you can run the command:
 ### Clean generated files
 `npm` run clean
 
+### Compile
+> Yarn: `yarn` build
+> NPM: `npm` run build
+
 ### Allure Reports
 > #### Generate
 `npm` allure:generate

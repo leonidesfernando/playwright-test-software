@@ -16,10 +16,12 @@
     "ua-parser-js": "^1.0.2"
   },
   "scripts": {
+    "run": "npx playwright test",
     "clean": "rimraf dist/*, test-results/*, allure-results/*, playwright-report/*",
     "build": "npm run clean && tsc",
     "allure:generate": "npx allure generate ./allure-results --clean",
     "allure:open": "npx allure open ./allure-report",
+    "allure": "npm run allure:generate && npm run allure:open",
     "allure:serve": "npx allure serve"
   }
 }

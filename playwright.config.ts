@@ -11,7 +11,7 @@ import { devices } from '@playwright/test';
  * See https://playwright.dev/docs/test-configuration.
  */
 const config: PlaywrightTestConfig = {
-  testDir: './tests',
+  testDir: './e2e',
   /* Maximum time one test can run for. */
   timeout: 30 * 1000,
   expect: {
@@ -35,13 +35,15 @@ const config: PlaywrightTestConfig = {
   use: {
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
     actionTimeout: 0,
-    headless: true,
-    screenshot: 'only-on-failure',
     /* Base URL to use in actions like `await page.goto('/')`. */
-    // baseURL: 'http://localhost:3000',
+    baseURL: 'http://localhost:8080',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+    screenshot: 'only-on-failure', // Capture screenshot after each test failure.
+    video: 'retain-on-failure', //Record video only when retrying a test for the first time.
+    headless: true,
+    viewport: { width: 1280, height: 720 }
   },
 
   /* Configure projects for major browsers */
@@ -52,7 +54,7 @@ const config: PlaywrightTestConfig = {
         ...devices['Desktop Chrome'],
       },
     },
-
+/*
     {
       name: 'firefox',
       use: {
@@ -60,13 +62,12 @@ const config: PlaywrightTestConfig = {
       },
     },
 
-
     {
       name: 'webkit',
       use: {
         ...devices['Desktop Safari'],
       },
-    },
+    },*/
 
     /* Test against mobile viewports. */
     // {
