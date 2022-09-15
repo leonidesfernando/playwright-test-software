@@ -1,8 +1,8 @@
+//@ts-check
 import { Locator, Page } from "@playwright/test";
+import { BasePage } from "./BasePage";
 
-export class EntryPage {
-
-    private readonly page:Page;
+export class EntryPage extends BasePage {
 
     private readonly inputDescription:Locator;
     private readonly inputDate:Locator;
@@ -15,20 +15,17 @@ export class EntryPage {
     private readonly btnSave:Locator;
 
     constructor(page:Page){
-        this.page = page;
-        this.btnSave = this.getBy('button[id="btnSalvar"]');
-        this.inputDescription = this.getBy('input[id="descricao"]');
-        this.inputDate = this.getBy('input[id="datepicker"]');
-        this.inputAmount = this.getBy('input[id="valor"]');
-        this.selectCategory = this.getBy('[id="categoria"]');
-        this.btnCancel = this.getBy('button[id="cancelar"]');  
-        this.radioIncome = this.getBy('#tipoLancamento1');
-        this.radioSpent = this.getBy('#tipoLancamento2');
-        this.radioTransf = this.getBy('#tipoLancamento3');
-    }
 
-    private getBy(locator:string){
-        return this.page.locator(locator);
+      super(page)
+      this.btnSave = this.getBy('button[id="btnSalvar"]');
+      this.inputDescription = this.getBy('input[id="descricao"]');
+      this.inputDate = this.getBy('input[id="datepicker"]');
+      this.inputAmount = this.getBy('input[id="valor"]');
+      this.selectCategory = this.getBy('[id="categoria"]');
+      this.btnCancel = this.getBy('button[id="cancelar"]');  
+      this.radioIncome = this.getBy('#tipoLancamento1');
+      this.radioSpent = this.getBy('#tipoLancamento2');
+      this.radioTransf = this.getBy('#tipoLancamento3');
     }
 
     public async saveEntry(description: string, date: string, value: string, category: string, typeEntry: string) {

@@ -1,25 +1,27 @@
+//@ts-check
 import { Locator, Page, expect } from "@playwright/test";
 import { GridUI } from "../components/GridUI";
+import { BasePage } from "./BasePage";
 import { EntryPage } from "./EntryPage";
+import { DashboradPage } from "./DashboardPage";
 
 enum Button {
     EDIT = 'btn-primary',
     DELETE = 'btn-danger'
 }
 
-export class EntryListPage {
+export class EntryListPage extends BasePage {
 
-    private readonly page:Page;
-    private readonly btnNewEntry:Locator;
-
-    private inputSearch : Locator;
+    private readonly btnNewEntry !: Locator;
+    private readonly inputSearch !: Locator;
+    private readonly btnDashboard !: Locator;
   
-    
 
     constructor(page: Page){
-        this.page = page;
-        this.btnNewEntry = page.locator('#novoLancamento')
+        super(page);
+        this.btnNewEntry = this.getBy('#novoLancamento')
         this.inputSearch = this.getBy('#itemBusca')
+        this.btnDashboard = this.getBy("a[title='Gráfico']")
     }
 
     public async openFirstToEdit() {
@@ -53,10 +55,13 @@ export class EntryListPage {
 
     private getGrid(): GridUI{
         return new GridUI('#tabelaLancamentos', this.page);
-      }
-
-    private getBy(locator:string){
-        return this.page.locator(locator);
     }
 
+    public async goToDashboard(){
+        await expect(this.page).toHaveURL(/lancamentos/);
+        await this.btnDashboard.click();
+        await expect(this.page).toHaveURL(/dashboard/);
+        let dashboard = new DashboradPage(this.page);
+        await dashboard.checkingDashboard();
+    }
 }

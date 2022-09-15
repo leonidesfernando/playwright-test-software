@@ -2,9 +2,9 @@ import { expect, Page } from '@playwright/test';
 import { LoginPage } from '../pageobjects/LoginPage';
 
 export class LoginHelper{
-    readonly page:Page;
-    readonly loginPage:LoginPage;
-    readonly url:string;
+    private readonly page !: Page;
+    private readonly loginPage !: LoginPage;
+    private readonly url !: string;
 
     constructor(page:Page, url:string){
         this.page = page;
@@ -29,6 +29,7 @@ export class LoginHelper{
     }
 
     public async doLogout(){
+        await expect(this.loginPage.logoutLink).toBeVisible()
         await this.loginPage.logoutLink.click();
         await expect(this.page).toHaveURL(/login/);
 

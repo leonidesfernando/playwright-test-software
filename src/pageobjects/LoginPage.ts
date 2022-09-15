@@ -1,16 +1,17 @@
-import { expect, Locator, Page } from '@playwright/test';
+//@ts-check
+import { Locator, Page } from '@playwright/test';
+import { BasePage } from './BasePage';
 
-export class LoginPage{
-    private readonly _loginInput:Locator;
-    private readonly _passwordInput:Locator;
-
-    private readonly _logoutLink:Locator;
+export class LoginPage extends BasePage{
+    private readonly _loginInput !:Locator;
+    private readonly _passwordInput !:Locator;
+    private readonly _logoutLink !:Locator;
 
     constructor(page:Page){
-        this._loginInput = page.locator('input[id="user"]');
-        this._passwordInput = page.locator('input[id="password"]');
-        this._logoutLink = page.locator('#logout')
-
+        super(page)
+        this._loginInput = this.getBy('input[id="user"]');
+        this._passwordInput = this.getBy('input[id="password"]');
+        this._logoutLink = this.getBy('#logout')
     }
 
     get loginInput(): Locator{

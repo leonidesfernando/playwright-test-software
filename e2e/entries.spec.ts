@@ -1,17 +1,11 @@
 //@ts-check
-
 import { test, expect, Page } from '@playwright/test';
 import {EntryListPage} from '../src/pageobjects/EntryListPage'
-//import {EntryPage} from '../src/pageobjects/EntryPage'
 import {LoginHelper} from '../src/helper/LoginHelper'
 import {DataGen} from '../src/utils/DataGen'
 
 const uaParser = require('ua-parser-js');
 
-
-//const url = 'http://localhost:8080'
-
-//test.describe.configure({ mode: 'parallel' });
 
 async function getBrowserName(page: Page) {
     const getUA = await page.evaluate(() => navigator.userAgent);
@@ -34,8 +28,7 @@ async function genData(page: Page){
 }
 
 
-
-test.describe('Add new Entry', async () => {
+test.describe('Grouping with describe to: Add new Entry', async () => {
     let page:Page;
     let entryListPage:EntryListPage;
     let data:{ date: string; description: string; value: string; category: string; typeEntry: string; };
@@ -43,7 +36,6 @@ test.describe('Add new Entry', async () => {
     test.beforeAll(async ({browser, baseURL}) => {
         page = await browser.newPage();
         data = await genData(page);
-        //
         expect(baseURL).not.toBeNull()
         let loginHelper = new LoginHelper(page, <string>baseURL);
         await loginHelper.doLogin();
@@ -52,7 +44,7 @@ test.describe('Add new Entry', async () => {
 
     test.afterAll(async ({baseURL}) => {
         let loginHelper = new LoginHelper(page, <string>baseURL);
-        loginHelper.doLogout()
+        await loginHelper.doLogout()
     })
     
     test.beforeEach(async ({ baseURL }) => { });
@@ -66,7 +58,7 @@ test.describe('Add new Entry', async () => {
     })
 })
 
-test.describe('CRUD - Edit an entry', async () => {
+test.describe('Grouping again to: Edit an entry', async () => {
 
     let page:Page;
     let entryListPage:EntryListPage;
@@ -75,7 +67,7 @@ test.describe('CRUD - Edit an entry', async () => {
     test.beforeAll(async ({browser, baseURL}) => {
         page = await browser.newPage();
         data = await genData(page);
-        //
+
         expect(baseURL).not.toBeNull()
         let loginHelper = new LoginHelper(page, <string>baseURL);
         await loginHelper.doLogin();
