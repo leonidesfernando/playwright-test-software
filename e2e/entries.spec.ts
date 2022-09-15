@@ -23,65 +23,45 @@ async function genData(page: Page){
     data.value = DataGen.moneyValue();
     data.category = DataGen.getCategory();
     data.typeEntry = DataGen.getTipoLancamento(data.category);
-
     return data;
 }
 
+let page:Page;
+test.beforeAll(async ({browser, baseURL}) => {
+    page = await browser.newPage();
+    expect(baseURL).not.toBeNull();
+    let loginHelper = new LoginHelper(page, <string>baseURL);
+    await loginHelper.doLogin();
+})
+
+test.afterAll(async ({baseURL}) => {
+    let loginHelper = new LoginHelper(page, <string>baseURL);
+    await loginHelper.doLogout();
+})
+
 
 test.describe('Grouping with describe to: Add new Entry', async () => {
-    let page:Page;
-    let entryListPage:EntryListPage;
-    let data:{ date: string; description: string; value: string; category: string; typeEntry: string; };
-
-    test.beforeAll(async ({browser, baseURL}) => {
-        page = await browser.newPage();
-        data = await genData(page);
-        expect(baseURL).not.toBeNull()
-        let loginHelper = new LoginHelper(page, <string>baseURL);
-        await loginHelper.doLogin();
-        entryListPage = new EntryListPage(page);
-    })
-
-    test.afterAll(async ({baseURL}) => {
-        let loginHelper = new LoginHelper(page, <string>baseURL);
-        await loginHelper.doLogout()
-    })
     
-    test.beforeEach(async ({ baseURL }) => { });
-
     test('Add a new entry and find it', async ({}) => {
-        const {date, description, value, category, typeEntry} = data;
+        const {date, description, value, category, typeEntry} = await genData(page);
+        let entryListPage = await new EntryListPage(page);
     
         let entryPage = await entryListPage.newEntry();
         await entryPage.saveEntry(description, date, value, category, typeEntry);
-        await entryListPage.findEntry(data.description);
+        await entryListPage.findEntry(description);
     })
 })
 
 test.describe('Grouping again to: Edit an entry', async () => {
 
-    let page:Page;
-    let entryListPage:EntryListPage;
-    let data:{ date: string; description: string; value: string; category: string; typeEntry: string; };
-
-    test.beforeAll(async ({browser, baseURL}) => {
-        page = await browser.newPage();
-        data = await genData(page);
-
-        expect(baseURL).not.toBeNull()
-        let loginHelper = new LoginHelper(page, <string>baseURL);
-        await loginHelper.doLogin();
-        entryListPage = new EntryListPage(page);
-    })
-
-
     test('Editing', async({}) => {
-        const {date, description, value, category, typeEntry} = data;
+        const {date, description, value, category, typeEntry} = await genData(page);
+        let entryListPage = await new EntryListPage(page);
         let entryPage = await entryListPage.newEntry();
         await entryPage.saveEntry(description, date, value, category, typeEntry);
         
-        entryPage = await entryListPage.openFirstToEdit()
-        const newDescription = `${description} - Edited`
+        entryPage = await entryListPage.openFirstToEdit();
+        const newDescription = `${description} - Edited`;
         await entryPage.saveEntry(newDescription, date, value, category, typeEntry);
         
         await entryListPage.findEntry(newDescription);
