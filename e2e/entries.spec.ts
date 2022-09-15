@@ -7,14 +7,14 @@ import {DataGen} from '../src/utils/DataGen'
 const uaParser = require('ua-parser-js');
 
 
-async function getBrowserName(page: Page) {
+async function getBrowserName(page: Page):Promise<string> {
     const getUA = await page.evaluate(() => navigator.userAgent);
     const userAgentInfo = await uaParser(getUA);
     const browserName = userAgentInfo.browser.name;
     return browserName;
 }
 
-async function genData(page: Page){
+async function genData(page: Page): Promise<any>{
 
     let data = {date: '', description: '', value: '', category: '', typeEntry: ''};
 
@@ -66,4 +66,14 @@ test.describe('Grouping again to: Edit an entry', async () => {
         
         await entryListPage.findEntry(newDescription);
     })
+})
+
+test('Removing an entry', async () => {
+    const {date, description, value, category, typeEntry} = await genData(page);
+    let entryListPage = await new EntryListPage(page);
+    let entryPage = await entryListPage.newEntry();
+    await entryPage.saveEntry(description, date, value, category, typeEntry);
+
+    await entryListPage.findEntry(description);
+    await entryListPage.removeFirstEntryByDescription(description);
 })

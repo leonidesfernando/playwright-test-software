@@ -1,5 +1,5 @@
 //@ts-check
-import { Page, expect } from "@playwright/test";
+import { Page, expect, Locator } from "@playwright/test";
 import { BaseUI } from "./BaseUI";
 
 export class GridUI extends BaseUI{
@@ -16,11 +16,6 @@ export class GridUI extends BaseUI{
     await this.mustHaveValueAtCell(line, column, item);
   }
 
-  public mustNotFindItem(item: string, line:number, column: number){
-    //this.getValueAtLine(line, column).filter(`:contains(${item})`).should('have.length', 0)
-    //this.mustBeEmpty()
-  }
-
   public async mustHaveValueAtCell(line: number, column: number, value: string) {
 
     let locator = await this.page.locator(this.getLineSelector(line, column)).first()
@@ -32,7 +27,7 @@ export class GridUI extends BaseUI{
     return `table${ this.id }.table:first-of-type tbody > tr:nth-of-type(${line}) td a.${btnClass}`;
   }
 
-  protected async getValueAtLine(lineIndex: number, column: number) {
+  protected async getValueAtLine(lineIndex: number, column: number): Promise<Locator> {
     const str =  await this.getLineSelector(lineIndex, column);
     await expect(str).not.toBeNull()
     return await this.page.locator(str);
@@ -42,21 +37,13 @@ export class GridUI extends BaseUI{
     return `table${this.id}.table:first-of-type tbody > tr:nth-of-type(${lineIndex}) td:nth-of-type(${column})`;
   }
 
-  protected mustBeEmpty(): void {
-    expect(this.existsAnyItem()).toBeFalsy();
+  public async mustBeEmpty(): Promise<void> {
+    expect(await this.existsAnyItem()).toBeFalsy()
   }
 
-  private existsAnyItem(): boolean {
-
-    let result: boolean = true;
-    /*CypressUtils.waitElementBeVisible(this.id);
-    cy.get(this.id).then($table => {
-      if ($table.find("ui-empty-table").length == 0) {
-        result = false;
-        return false;
-      }
-    });*/
-    return result;
+  private async existsAnyItem(): Promise<boolean> {
+    await expect(this.page.locator(this.id)).toBeVisible()
+    return await this.page.locator(`${this.id}.ui-empty-table`).count() == 0;
   }
 
 }

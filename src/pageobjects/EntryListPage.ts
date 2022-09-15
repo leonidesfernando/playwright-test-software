@@ -15,23 +15,29 @@ export class EntryListPage extends BasePage {
     private readonly btnNewEntry !: Locator;
     private readonly inputSearch !: Locator;
     private readonly btnDashboard !: Locator;
-  
 
     constructor(page: Page){
         super(page);
-        this.btnNewEntry = this.getBy('#novoLancamento')
-        this.inputSearch = this.getBy('#itemBusca')
-        this.btnDashboard = this.getBy("a[title='Gráfico']")
+        this.btnNewEntry = this.getBy('#novoLancamento');
+        this.inputSearch = this.getBy('#itemBusca');
+        this.btnDashboard = this.getBy("a[title='Gráfico']");
     }
 
     public async openFirstToEdit() {
-        await this.clickButton(Button.EDIT)
+        await this.clickButton(Button.EDIT);
         return await new EntryPage(this.page);
+    }
+
+    public async removeFirstEntryByDescription(description: string) {
+        await this.clickButton(Button.DELETE);
+        await this.searchByDescription(description);
+        let grid = await this.getGrid();
+        await grid.mustBeEmpty();
     }
 
     protected async clickButton(btn: Button){
         let grid = await this.getGrid();
-        let locator = await this.page.locator(await grid.getButtonAtByClass(1, 6, btn.toString()))
+        let locator = await this.page.locator(await grid.getButtonAtByClass(1, 6, btn.toString()));
         await locator.click();
     }
 
@@ -47,14 +53,14 @@ export class EntryListPage extends BasePage {
     }
 
     private async searchByDescription(description: string){
-        await expect(description).not.toBeNull()
-        await this.inputSearch.fill('')
-        await this.inputSearch.fill(description)
-        await this.inputSearch.press('Enter')
+        await expect(description).not.toBeNull();
+        await this.inputSearch.fill('');
+        await this.inputSearch.fill(description);
+        await this.inputSearch.press('Enter');
     }
 
-    private getGrid(): GridUI{
-        return new GridUI('#tabelaLancamentos', this.page);
+    private async getGrid(): Promise<GridUI>{
+        return await new GridUI('#tabelaLancamentos', this.page);
     }
 
     public async goToDashboard(){
