@@ -23,36 +23,36 @@ export class EntryListPage extends BasePage {
         this.btnDashboard = this.getBy("a[title='Gráfico']");
     }
 
-    public async openFirstToEdit() {
+    public async openFirstToEdit():Promise<EntryPage> {
         await this.clickButton(Button.EDIT);
         return new EntryPage(this.page);
     }
 
-    public async removeFirstEntryByDescription(description: string) {
+    public async removeFirstEntryByDescription(description: string): Promise<void> {
         await this.clickButton(Button.DELETE);
         await this.searchByDescription(description);
         let grid = await this.getGrid();
         await grid.mustBeEmpty();
     }
 
-    protected async clickButton(btn: Button){
+    protected async clickButton(btn: Button): Promise<void>{
         let grid = await this.getGrid();
         let locator = this.page.locator(grid.getButtonAtByClass(1, 6, btn.toString()));
         await locator.click();
     }
 
-    public async newEntry(){
+    public async newEntry(): Promise<EntryPage>{
         await this.btnNewEntry.click();
         return new EntryPage(this.page);
     }
 
-    public async findEntry(description: string) {
+    public async findEntry(description: string): Promise<void> {
         await this.searchByDescription(description);
         let grid = await this.getGrid();
         await grid.findItemAt(description, 1, 1);
     }
 
-    private async searchByDescription(description: string){
+    private async searchByDescription(description: string): Promise<void>{
         expect(description).not.toBeNull();
         await this.inputSearch.fill('');
         await this.inputSearch.fill(description);
@@ -63,7 +63,7 @@ export class EntryListPage extends BasePage {
         return new GridUI('#tabelaLancamentos', this.page);
     }
 
-    public async goToDashboard(){
+    public async goToDashboard(): Promise<void>{
         await expect(this.page).toHaveURL(/lancamentos/);
         await this.btnDashboard.click();
         await expect(this.page).toHaveURL(/dashboard/);

@@ -15,7 +15,7 @@ export class LoginHelper{
     /**
      * doLogin
      */
-    public async doLogin() {
+    public async doLogin():Promise<void> {
 
         await this.page.goto(this.url);
         await expect(this.page).toHaveTitle(/Login - Simple WebApp/);
@@ -28,7 +28,7 @@ export class LoginHelper{
         await expect(this.page).toHaveURL(/lancamentos/);
     }
 
-    public async doLogout(){
+    public async doLogout(): Promise<void>{
         await expect(this.loginPage.logoutLink).toBeVisible()
         await this.loginPage.logoutLink.click();
         await expect(this.page).toHaveURL(/login/);

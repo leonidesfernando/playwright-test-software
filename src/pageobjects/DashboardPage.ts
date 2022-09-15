@@ -17,12 +17,12 @@ export class DashboradPage extends BasePage{
         this.loadingChart = this.getBy('#loadingDivPie');
     }
 
-    public async goToListing(){
+    public async goToListing(): Promise<void>{
         this.btnList.click();
         await expect(this.page).toHaveURL(/lancamentos/);
     }
     
-    public async checkingDashboard(){
+    public async checkingDashboard(): Promise<void>{
         await expect(this.loadingChart).toHaveCount(0);
         await expect(this.pieChart).toBeVisible();
         await expect(this.tableChat).toBeVisible();

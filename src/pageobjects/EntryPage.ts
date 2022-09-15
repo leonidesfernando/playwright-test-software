@@ -28,13 +28,13 @@ export class EntryPage extends BasePage {
       this.radioTransf = this.getBy('#tipoLancamento3');
     }
 
-    public async saveEntry(description: string, date: string, value: string, category: string, typeEntry: string) {
+    public async saveEntry(description: string, date: string, value: string, category: string, typeEntry: string):Promise<void> {
     
         await this.fillData(description, date, value, category, typeEntry);
         await this.btnSave.click();
     }
 
-    private async fillData(description: string, date: string, value: string, category: string, typeEntry: string) {
+    private async fillData(description: string, date: string, value: string, category: string, typeEntry: string):Promise<void> {
         await this.fillDescription(description);
         await this.inputDate.fill(date);
         await this.inputDescription.click();
@@ -43,13 +43,14 @@ export class EntryPage extends BasePage {
         await this.selectCategory.selectOption(category)
       }
 
-      private async fillDescription(description: string) {
+      private async fillDescription(description: string):Promise<void> {
         await this.inputDescription.fill('');
-        if(description && (description.trim() != ''))
+        if(description && (description.trim() != '')){
           await this.inputDescription.fill(description);
+        }
       }
 
-      private async selectTypeEntry(typeEntry: string) {
+      private async selectTypeEntry(typeEntry: string): Promise<void> {
         switch(typeEntry){
           case 'TRANSF':
             this.radioTransf.click();

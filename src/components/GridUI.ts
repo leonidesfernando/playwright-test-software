@@ -12,18 +12,18 @@ export class GridUI extends BaseUI{
   }
 
 
-  public async findItemAt(item: string, line: number, column: number) {
+  public async findItemAt(item: string, line: number, column: number):Promise<void> {
     await this.mustHaveValueAtCell(line, column, item);
   }
 
-  public async mustHaveValueAtCell(line: number, column: number, value: string) {
+  public async mustHaveValueAtCell(line: number, column: number, value: string):Promise<void> {
 
     let locator = this.page.locator(this.getLineSelector(line, column)).first()
     let extractedValue = await locator.innerText()
     expect(extractedValue).toEqual(value)
   }
 
-  public getButtonAtByClass(line: number, column: number, btnClass: string) {
+  public getButtonAtByClass(line: number, column: number, btnClass: string): string {
     return `table${ this.id }.table:first-of-type tbody > tr:nth-of-type(${line}) td a.${btnClass}`;
   }
 
@@ -33,7 +33,7 @@ export class GridUI extends BaseUI{
     return  this.page.locator(str);
   }
 
-  private getLineSelector(lineIndex: number, column: number) {
+  private getLineSelector(lineIndex: number, column: number): string {
     return `table${this.id}.table:first-of-type tbody > tr:nth-of-type(${lineIndex}) td:nth-of-type(${column})`;
   }
 
