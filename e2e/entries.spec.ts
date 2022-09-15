@@ -49,6 +49,11 @@ test.describe('Add new Entry', async () => {
         await loginHelper.doLogin();
         entryListPage = new EntryListPage(page);
     })
+
+    test.afterAll(async ({baseURL}) => {
+        let loginHelper = new LoginHelper(page, <string>baseURL);
+        loginHelper.doLogout()
+    })
     
     test.beforeEach(async ({ baseURL }) => { });
 

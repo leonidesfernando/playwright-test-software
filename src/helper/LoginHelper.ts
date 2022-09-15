@@ -27,4 +27,10 @@ export class LoginHelper{
 
         await expect(this.page).toHaveURL(/lancamentos/);
     }
+
+    public async doLogout(){
+        await this.loginPage.logoutLink.click();
+        await expect(this.page).toHaveURL(/login/);
+
+    }
 }
