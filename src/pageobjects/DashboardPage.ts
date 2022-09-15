@@ -7,12 +7,14 @@ export class DashboradPage extends BasePage{
     private readonly btnList !: Locator;
     private readonly pieChart !: Locator;
     private readonly tableChat !: Locator;
+    private readonly loadingChart !: Locator;
 
     constructor(page:Page){
         super(page)
-        this.btnList = this.getBy('a[title="Listagem"]')
-        this.pieChart = this.getBy('#pieChart')
-        this.tableChat = this.getBy('#tableChart')
+        this.btnList = this.getBy('a[title="Listagem"]');
+        this.pieChart = this.getBy('#pieChart');
+        this.tableChat = this.getBy('#tableChart');
+        this.loadingChart = this.getBy('#loadingDivPie');
     }
 
     public async goToListing(){
@@ -21,8 +23,9 @@ export class DashboradPage extends BasePage{
     }
     
     public async checkingDashboard(){
-        await expect(this.pieChart).toBeVisible()
-        await expect(this.tableChat).toBeVisible()
+        await expect(this.loadingChart).toHaveCount(0);
+        await expect(this.pieChart).toBeVisible();
+        await expect(this.tableChat).toBeVisible();
     }
 
 }
