@@ -1,15 +1,14 @@
 //@ts-check
+import { Page, expect } from "@playwright/test";
+import { BaseUI } from "./BaseUI";
 
-import { Locator, Page, expect } from "@playwright/test";
-
-export class GridUI{
+export class GridUI extends BaseUI{
 
   private readonly id:string;
-  private readonly page: Page;
 
   public constructor(id:string, page:Page){
+    super(page);
     this.id = id;
-    this.page = page;
   }
 
 
