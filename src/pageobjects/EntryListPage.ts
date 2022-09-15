@@ -25,7 +25,7 @@ export class EntryListPage extends BasePage {
 
     public async openFirstToEdit() {
         await this.clickButton(Button.EDIT);
-        return await new EntryPage(this.page);
+        return new EntryPage(this.page);
     }
 
     public async removeFirstEntryByDescription(description: string) {
@@ -37,7 +37,7 @@ export class EntryListPage extends BasePage {
 
     protected async clickButton(btn: Button){
         let grid = await this.getGrid();
-        let locator = await this.page.locator(await grid.getButtonAtByClass(1, 6, btn.toString()));
+        let locator = this.page.locator(grid.getButtonAtByClass(1, 6, btn.toString()));
         await locator.click();
     }
 
@@ -53,14 +53,14 @@ export class EntryListPage extends BasePage {
     }
 
     private async searchByDescription(description: string){
-        await expect(description).not.toBeNull();
+        expect(description).not.toBeNull();
         await this.inputSearch.fill('');
         await this.inputSearch.fill(description);
         await this.inputSearch.press('Enter');
     }
 
     private async getGrid(): Promise<GridUI>{
-        return await new GridUI('#tabelaLancamentos', this.page);
+        return new GridUI('#tabelaLancamentos', this.page);
     }
 
     public async goToDashboard(){

@@ -18,7 +18,7 @@ export class GridUI extends BaseUI{
 
   public async mustHaveValueAtCell(line: number, column: number, value: string) {
 
-    let locator = await this.page.locator(this.getLineSelector(line, column)).first()
+    let locator = this.page.locator(this.getLineSelector(line, column)).first()
     let extractedValue = await locator.innerText()
     expect(extractedValue).toEqual(value)
   }
@@ -28,9 +28,9 @@ export class GridUI extends BaseUI{
   }
 
   protected async getValueAtLine(lineIndex: number, column: number): Promise<Locator> {
-    const str =  await this.getLineSelector(lineIndex, column);
-    await expect(str).not.toBeNull()
-    return await this.page.locator(str);
+    const str = this.getLineSelector(lineIndex, column);
+    expect(str).not.toBeNull()
+    return  this.page.locator(str);
   }
 
   private getLineSelector(lineIndex: number, column: number) {
