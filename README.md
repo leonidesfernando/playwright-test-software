@@ -15,7 +15,11 @@ Beyond the web app running you can run the command:
 
 ### Allure Reports
 > #### Generate
-`npm` allure:generate
+`npm` run allure:generate
 
 > ### Open report
-`npm` allure:open
+`npm` run allure:open
+
+> ### All in one
+>If you want to run just one command you can use
+`npm` run allure 
