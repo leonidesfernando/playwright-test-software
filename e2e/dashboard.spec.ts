@@ -1,6 +1,7 @@
 //@ts-check
 import { test, expect, Page } from '@playwright/test';
 import {LoginHelper} from '../src/helper/LoginHelper'
+import { DashboradPage } from '../src/pageobjects/DashboardPage';
 import {EntryListPage} from '../src/pageobjects/EntryListPage'
 
 let page:Page;
@@ -19,8 +20,15 @@ test.afterAll(async ({baseURL}) => {
 
 test.describe('Dashbord access validation', async () => {
 
+    
     test('Accessing dashborad', async ({}) => {
         let entryListPage:EntryListPage = new EntryListPage(page);
-        await entryListPage.goToDashboard();
+        entryListPage.goToDashboard();
+    })
+
+    test('Backing to list', async ({}) => {
+        let entryListPage:EntryListPage = new EntryListPage(page);
+        let dashboard:DashboradPage = await entryListPage.goToDashboard();
+        dashboard.goToListing();
     })
 })

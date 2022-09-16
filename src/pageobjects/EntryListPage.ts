@@ -54,6 +54,7 @@ export class EntryListPage extends BasePage {
 
     private async searchByDescription(description: string): Promise<void>{
         expect(description).not.toBeNull();
+        await expect(this.page).toHaveURL(/lancamentos/);
         await this.inputSearch.fill('');
         await this.inputSearch.fill(description);
         await this.inputSearch.press('Enter');
@@ -63,11 +64,12 @@ export class EntryListPage extends BasePage {
         return new GridUI('#tabelaLancamentos', this.page);
     }
 
-    public async goToDashboard(): Promise<void>{
+    public async goToDashboard(): Promise<DashboradPage>{
         await expect(this.page).toHaveURL(/lancamentos/);
         await this.btnDashboard.click();
         await expect(this.page).toHaveURL(/dashboard/);
         let dashboard = new DashboradPage(this.page);
         await dashboard.checkingDashboard();
+        return dashboard;
     }
 }
