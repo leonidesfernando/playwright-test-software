@@ -41,16 +41,14 @@ test.afterAll(async ({baseURL}) => {
 })
 
 
-test.describe('Grouping with describe to: Add new Entry', async () => {
-    
+
+test.describe('CRUD - Add, Edit and Remove an entry', async () => {
+
     test('Add a new entry and find it', async ({}) => {
         let entryListPage = new EntryListPage(page);
         let data = await addEntry(entryListPage);
         await entryListPage.findEntry(data.description);
     })
-})
-
-test.describe('Grouping again to: Edit an entry', async () => {
 
     test('Editing', async({}) => {
         let entryListPage = new EntryListPage(page);
@@ -59,12 +57,14 @@ test.describe('Grouping again to: Edit an entry', async () => {
         const newDescription = `${data.description} - Edited`;
         await entryPage.saveEntry(newDescription, data.date, data.value, data.category, data.typeEntry);        
         await entryListPage.findEntry(newDescription);
-    })
+    });
+
+    test('Removing an entry', async () => {
+        let entryListPage = new EntryListPage(page);
+        let data = await addEntry(entryListPage);
+        await entryListPage.findEntry(data.description);
+        await entryListPage.removeFirstEntryByDescription(data.description);
+    });
 })
 
-test('Removing an entry', async () => {
-    let entryListPage = new EntryListPage(page);
-    let data = await addEntry(entryListPage);
-    await entryListPage.findEntry(data.description);
-    await entryListPage.removeFirstEntryByDescription(data.description);
-})
+
