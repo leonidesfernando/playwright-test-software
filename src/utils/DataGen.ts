@@ -55,7 +55,7 @@ export const DataGen = {
 
 
 function getAny(list: string[]){
-  var index = DataGen.numberByRange(list.length);
+  let index = DataGen.numberByRange(list.length);
   if(index == list.length){
     index--;
   }
@@ -63,9 +63,9 @@ function getAny(list: string[]){
 }
 
 function getDayByMonth(month: number) {
-  var months31Days = [1, 3, 5, 7, 8, 10, 12];
+  let months31Days = [1, 3, 5, 7, 8, 10, 12];
 
-  var day = 0;
+  let day = 0;
   while (day == 0) {
     day = (month == 2) ? DataGen.numberByRange(28) :
       months31Days.includes(month) ? DataGen.numberByRange(31) : DataGen.numberByRange(30);

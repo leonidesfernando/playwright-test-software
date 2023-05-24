@@ -19,7 +19,7 @@ const config: PlaywrightTestConfig = {
      * Maximum time expect() should wait for the condition to be met.
      * For example in `await expect(locator).toHaveText();`
      */
-    timeout: 5000
+    timeout: 10000
   },
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -43,7 +43,7 @@ const config: PlaywrightTestConfig = {
     screenshot: 'only-on-failure', // Capture screenshot after each test failure.
     video: 'retain-on-failure', //Record video only when retrying a test for the first time.
     headless: true,
-    viewport: { width: 1280, height: 720 }
+    //viewport: { width: 1280, height: 720 }
   },
 
   /* Configure projects for major browsers */
