@@ -12,15 +12,25 @@ export class GridUI extends BaseUI{
   }
 
 
-  public async findItemAt(item: string, line: number, column: number):Promise<void> {
-    await this.mustHaveValueAtCell(line, column, item);
+  public async findItemAt(text:string, line:number):Promise<void> {
+    const [description, category, entryType] = await Promise.all([
+      this.getTextItemAtLineBy(text, line, 'descrption'),
+      this.getTextItemAtLineBy(text, line, 'category'),
+      this.getTextItemAtLineBy(text, line, 'entryType')
+    ]);
+
+    expect([description, category, entryType]).toContain(text);
   }
 
-  public async mustHaveValueAtCell(line: number, column: number, value: string):Promise<void> {
-
-    let locator = this.page.locator(this.getLineSelector(line, column)).first()
-    let extractedValue = await locator.innerText()
-    expect(extractedValue).toEqual(value)
+  /**
+   * 
+   * @param text - text to be found
+   * @param line - which line the text must be found
+   * @param item - where should used to perform the search(description, category, entryType)
+   */
+  private async getTextItemAtLineBy(text:string, line: number, item:string): Promise<string>{
+    let locator = this.page.locator(`td#${item}${line}`).first();
+    return await locator.innerText();
   }
 
   public getButtonAtByClass(line: number, column: number, btnClass: string): string {

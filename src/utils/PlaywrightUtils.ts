@@ -1,14 +1,11 @@
 //@ts-check
-import { Page } from '@playwright/test';
-const uaParser = require('ua-parser-js');
+const _globals = require("../../node_modules/@playwright/test/lib/common/globals");
 
 export default class PlaywrightUtils{
 
-    static async getBrowserName(page: Page):Promise<string> {
-        const getUA = await page.evaluate(() => navigator.userAgent);
-        const userAgentInfo = await uaParser(getUA);
-        const browserName = userAgentInfo.browser.name;
-        return browserName;
+    static async getBrowserName():Promise<string> {
+        const curTestInfo = await (0, _globals.currentTestInfo)();
+        return curTestInfo._test._projectId;
     }
 
 }

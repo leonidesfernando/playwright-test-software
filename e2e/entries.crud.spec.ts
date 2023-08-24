@@ -1,44 +1,33 @@
 //@ts-check
 import { test, expect, Page } from '@playwright/test';
 import {EntryListPage} from '../src/pageobjects/EntryListPage';
-import {LoginHelper} from '../src/helper/LoginHelper';
 import { CrudUtils } from '../src/utils/CRUDUtils';
 
-let page:Page;
 
+test.describe('CRUD - Add, Edit and Remove an entry',() => {
 
-test.describe('CRUD - Add, Edit and Remove an entry', async () => {
-
-    test.beforeAll(async ({browser, baseURL}) => {
-        page = await browser.newPage();
-        expect(baseURL).not.toBeNull();
-        let loginHelper = new LoginHelper(page, <string>baseURL);
-        await loginHelper.doLogin();
-    })
-    
-    test.afterAll(async ({baseURL}) => {
-        let loginHelper = new LoginHelper(page, <string>baseURL);
-        await loginHelper.doLogout();
+    test.beforeEach(async ({page, baseURL}) => {
+        await page.goto(<string>baseURL);
     })
 
-    test('Add a new entry and find it', async ({}) => {
+    test('Add a new entry and find it', async ({page}) => {
         let entryListPage = new EntryListPage(page);
-        let data = await CrudUtils.addEntry(entryListPage, page);
+        let data = await CrudUtils.addEntry(entryListPage);
         await entryListPage.findEntry(data.description);
     })
 
-    test('Editing', async({}) => {
+    test('Editing', async({page}) => {
         let entryListPage = new EntryListPage(page);
-        let data = await CrudUtils.addEntry(entryListPage, page);
+        let data = await CrudUtils.addEntry(entryListPage);
         let entryPage = await entryListPage.openFirstToEdit();
         const newDescription = `${data.description} - Edited`;
         await entryPage.saveEntry(newDescription, data.date, data.value, data.category, data.typeEntry);        
         await entryListPage.findEntry(newDescription);
     });
 
-    test('Removing an entry', async () => {
+    test('Removing an entry', async ({page}) => {
         let entryListPage = new EntryListPage(page);
-        let data = await CrudUtils.addEntry(entryListPage, page);
+        let data = await CrudUtils.addEntry(entryListPage);
         await entryListPage.findEntry(data.description);
         await entryListPage.removeFirstEntryByDescription(data.description);
     });

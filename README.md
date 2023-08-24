@@ -4,7 +4,7 @@ Project to explore Playwright.dev in e2e tests and some plugins such as allure-p
 
 ## Run
 Beyond the web app running you can run the command:
-> `npx` playwright test
+> `npx playwright test`
 
 ### Clean generated files
 `npm` run clean

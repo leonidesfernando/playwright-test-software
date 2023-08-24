@@ -7,7 +7,7 @@ import { DashboradPage } from "./DashboardPage";
 
 enum Button {
     EDIT = 'btn-primary',
-    DELETE = 'btn-danger'
+    DELETE = 'btn-warning'
 }
 
 export class EntryListPage extends BasePage {
@@ -49,7 +49,7 @@ export class EntryListPage extends BasePage {
     public async findEntry(description: string): Promise<void> {
         await this.searchByDescription(description);
         let grid = await this.getGrid();
-        await grid.findItemAt(description, 1, 1);
+        await grid.findItemAt(description, 1);
     }
 
     private async searchByDescription(description: string): Promise<void>{
@@ -57,7 +57,7 @@ export class EntryListPage extends BasePage {
         await expect(this.page).toHaveURL(/lancamentos/);
         await this.inputSearch.fill('');
         await this.inputSearch.fill(description);
-        await this.inputSearch.press('Enter');
+        await this.inputSearch.press('Enter');   
     }
 
     private async getGrid(): Promise<GridUI>{
