@@ -2,12 +2,13 @@
 import { test, expect, Page } from '@playwright/test';
 import {EntryListPage} from '../src/pageobjects/EntryListPage';
 import { CrudUtils } from '../src/utils/CRUDUtils';
+import { getBaseUrl } from '../config';
 
 
 test.describe('CRUD - Add, Edit and Remove an entry',() => {
 
-    test.beforeEach(async ({page, baseURL}) => {
-        await page.goto(<string>baseURL);
+    test.beforeEach(async ({page}) => {
+        await page.goto(getBaseUrl());
     })
 
     test('Add a new entry and find it', async ({page}) => {

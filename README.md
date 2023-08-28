@@ -2,9 +2,14 @@
 Project to explore Playwright.dev in e2e tests and some plugins such as allure-playwright, faker, etc. All tests were built to run against a simple web application in the teste-software repository. 
 
 
+## Environment
+The environment is defined in the `.env` file, currently we are supporing __test__ and __prod__ environments.
+So, before you run, you must define the target environment and setup the data int the `config.json` file.
+
+
 ## Run
 Beyond the web app running you can run the command:
-> `npx playwright test`
+> `npm run test`
 
 ### Clean generated files
 `npm` run clean

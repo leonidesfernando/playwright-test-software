@@ -1,5 +1,7 @@
 import { expect, Page } from '@playwright/test';
 import { LoginPage } from '../pageobjects/LoginPage';
+import { getPassword, getUsername } from '../../config';
+
 
 export class LoginHelper{
     private readonly page !: Page;
@@ -21,8 +23,8 @@ export class LoginHelper{
         await expect(this.page).toHaveTitle(/Login - Simple WebApp/);
         await expect(this.page).toHaveURL(/login/);
         await this.loginPage.loginInput.click();
-        await this.loginPage.loginInput.fill('user');
-        await this.loginPage.passwordInput.fill('a');
+        await this.loginPage.loginInput.fill(getUsername());
+        await this.loginPage.passwordInput.fill(getPassword());
         await this.loginPage.passwordInput.press('Enter');
 
         await expect(this.page).toHaveURL(/lancamentos/);

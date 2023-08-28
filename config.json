@@ -1,0 +1,12 @@
+{
+  "prod": {
+    "baseUrl": "http://localhost:8080",
+    "username": "",
+    "password": ""
+  },
+  "test": {
+    "baseUrl": "http://localhost:8080",
+    "username": "",
+    "password": ""
+  }
+}
