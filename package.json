@@ -30,8 +30,5 @@
     "allure:open": "npx allure open ./allure-report",
     "allure": "npm run allure:generate && npm run allure:open",
     "allure:serve": "npx allure serve"
-  },
-  "dependencies": {
-    "dotenv": "^16.3.1"
   }
 }

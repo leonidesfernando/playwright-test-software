@@ -2,6 +2,13 @@
 Project to explore Playwright.dev in e2e tests and some plugins such as allure-playwright, faker, etc. All tests were built to run against a simple web application in the teste-software repository. 
 
 
+## Requeriments 
+- [NodeJS](https://nodejs.org/) v20.3.1
+- [Yarn](https://yarnpkg.com/getting-started) 1.22.19+
+- NPM 9.6.7+
+- [PlayWright](https://playwright.dev/) 1.3.7
+
+
 ## Environment
 The environment is defined in the `.env` file, currently we are supporing __test__ and __prod__ environments.
 So, before you run, you must define the target environment and setup the data int the `config.json` file.

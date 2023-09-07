@@ -1,8 +1,6 @@
 import { expect } from '@playwright/test';
 import config from './config.json';
-import dotenv from 'dotenv';
 
-dotenv.config();
 
 const env: string = process.env.ENV_NAME || 'test';
 
