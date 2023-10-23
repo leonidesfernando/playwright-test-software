@@ -53,7 +53,12 @@ export class GridUI extends BaseUI{
 
   private async existsAnyItem(): Promise<boolean> {
     await expect(this.page.locator(this.id)).toBeVisible()
-    return await this.page.locator(`${this.id}.ui-empty-table`).count() == 0;
+
+    const cssClasses = await this.page.locator(`${this.id}`).getAttribute("class");
+    if (cssClasses?.includes('ui-empty-table')){
+      return false;
+    }
+    return await this.page.locator(`#description1`).count() > 0;
   }
 
 }
