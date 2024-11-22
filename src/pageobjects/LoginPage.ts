@@ -9,7 +9,7 @@ export class LoginPage extends BasePage{
 
     constructor(page:Page){
         super(page)
-        this._loginInput = this.getBy('input[id="user"]');
+        this._loginInput = this.getBy('input[id="username"]');
         this._passwordInput = this.getBy('input[id="password"]');
         this._logoutLink = this.getBy('#logout')
     }

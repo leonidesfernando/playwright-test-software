@@ -7,6 +7,7 @@ import { getBaseUrl } from '../config';
 
 
 test.describe('Dashbord access validation', () => {
+
     test.beforeEach(async ({page}) => {
         await page.goto(getBaseUrl());
     })    

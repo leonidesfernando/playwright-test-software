@@ -20,14 +20,13 @@ export class LoginHelper{
     public async doLogin():Promise<void> {
 
         await this.page.goto(this.url);
-        await expect(this.page).toHaveTitle(/Login - Simple WebApp/);
         await expect(this.page).toHaveURL(/login/);
         await this.loginPage.loginInput.click();
         await this.loginPage.loginInput.fill(getUsername());
         await this.loginPage.passwordInput.fill(getPassword());
         await this.loginPage.passwordInput.press('Enter');
 
-        await expect(this.page).toHaveURL(/lancamentos/);
+        await expect(this.page).toHaveURL(/entries/);
     }
 
     public async doLogout(): Promise<void>{

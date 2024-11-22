@@ -1,12 +1,11 @@
 # playwright-test-software
-Project to explore Playwright.dev in e2e tests and some plugins such as allure-playwright, faker, etc. All tests were built to run against a simple web application in the teste-software repository. 
+Project to explore Playwright.dev in e2e tests and some plugins such as allure-playwright, faker, etc. All tests were built to run against a simple web application in the [teste-software-ui](https://github.com/leonidesfernando/test-software-ui) repository. 
 
 
 ## Requeriments 
-- [NodeJS](https://nodejs.org/) v20.3.1
-- [Yarn](https://yarnpkg.com/getting-started) 1.22.19+
-- NPM 9.6.7+
-- [PlayWright](https://playwright.dev/) 1.3.7
+- [NodeJS](https://nodejs.org/) v20.10.0
+- NPM 10.9.0+
+- [PlayWright](https://playwright.dev/) 1.49.0
 
 
 ## Environment

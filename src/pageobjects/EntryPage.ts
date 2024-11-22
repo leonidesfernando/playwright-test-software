@@ -18,14 +18,14 @@ export class EntryPage extends BasePage {
 
       super(page)
       this.btnSave = this.getBy('button[id="btnSalvar"]');
-      this.inputDescription = this.getBy('input[id="descricao"]');
-      this.inputDate = this.getBy('input[id="datepicker"]');
-      this.inputAmount = this.getBy('input[id="valor"]');
-      this.selectCategory = this.getBy('[id="categoria"]');
+      this.inputDescription = this.getBy('input[id="description"]');
+      this.inputDate = this.getBy('input[name="entryDate"]');
+      this.inputAmount = this.getBy('input[id="amount"]');
+      this.selectCategory = this.getBy('[id="category"]');
       this.btnCancel = this.getBy('button[id="cancelar"]');  
-      this.radioIncome = this.getBy('#tipoLancamento1');
-      this.radioSpent = this.getBy('#tipoLancamento2');
-      this.radioTransf = this.getBy('#tipoLancamento3');
+      this.radioIncome = this.getBy('#INCOME');
+      this.radioSpent = this.getBy('#EXPENSE');
+      this.radioTransf = this.getBy('#TRANSF');
     }
 
     public async saveEntry(description: string, date: string, value: string, category: string, typeEntry: string):Promise<void> {
@@ -36,11 +36,17 @@ export class EntryPage extends BasePage {
 
     private async fillData(description: string, date: string, value: string, category: string, typeEntry: string):Promise<void> {
         await this.fillDescription(description);
+        await this.inputDate.click();
+        await this.inputDate.dblclick();
+        
+
         await this.inputDate.fill(date);
+        //await this.inputDate.fill('2024-11-20');
         await this.inputDescription.click();
         await this.inputAmount.fill(value);
         await this.selectTypeEntry(typeEntry)
         await this.selectCategory.selectOption(category)
+
       }
 
       private async fillDescription(description: string):Promise<void> {

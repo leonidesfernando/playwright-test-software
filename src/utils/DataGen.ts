@@ -1,14 +1,14 @@
 //@ts-check
 import * as genData from "@faker-js/faker";
 
-let CATEGORIES:string[] = ['ALIMENTACAO', 'SALARIO', 'LAZER'
-                  , 'TELEFONE_INTERNET', 'CARRO', 'EMPRESTIMO'
-                  , 'INVESTIMENTOS', 'OUTROS']
+let CATEGORIES:string[] = ['FOOD', 'WAGE', 'LEISURE'
+                  , 'PHONE_INTERNET', 'CAR', 'LOAN'
+                  ,'CLOTHING', 'INVESTIMENTS', 'OTHER']
 
 let tiposLancamento = new Map();
-tiposLancamento.set(['INVESTIMENTOS','OUTROS'],['TRANSF']);
-tiposLancamento.set(['SALARIO', 'OUTROS'], ['RENDA']);
-tiposLancamento.set(CATEGORIES.filter(c => c != 'INVESTIMENTOS' && c != 'SALARIO'), ['DESPESA']);
+tiposLancamento.set(['INVESTIMENTS','OTHER'],['TRANSF']);
+tiposLancamento.set(['WAGE', 'OTHER'], ['INCOME']);
+tiposLancamento.set(CATEGORIES.filter(c => c != 'INVESTIMENTOS' && c != 'WAGE'), ['EXPENSE']);
 
 
 export const DataGen = {
@@ -35,7 +35,10 @@ export const DataGen = {
     let now = new Date();
     let month = now.getMonth() + 1;
     let year = now.getFullYear();
-    return `${toDateFormat(getDayByMonth(month))}/${toDateFormat(month)}/${year}`;
+    //return `${toDateFormat(getDayByMonth(month))}/${toDateFormat(month)}/${year}`;
+
+    // to work with Vue we must use this format
+    return `${year}-${toDateFormat(month)}-${toDateFormat(getDayByMonth(month))}`;
   },
 
   moneyValue(): string {

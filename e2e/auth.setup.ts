@@ -10,5 +10,6 @@ setup('Authenticate', async ({ page }) => {
   let loginHelper = new LoginHelper(page, baseURL);
   await loginHelper.doLogin();
 
+
   await page.context().storageState({ path: authFile });
 });

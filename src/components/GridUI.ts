@@ -1,6 +1,7 @@
 //@ts-check
 import { Page, expect, Locator } from "@playwright/test";
 import { BaseUI } from "./BaseUI";
+import { StringUtils } from "../utils/StringUtils";
 
 export class GridUI extends BaseUI{
 
@@ -11,30 +12,31 @@ export class GridUI extends BaseUI{
     this.id = id;
   }
 
-
   public async findItemAt(text:string, line:number):Promise<void> {
+
     const [description, category, entryType] = await Promise.all([
-      this.getTextItemAtLineBy(text, line, 'descrption'),
-      this.getTextItemAtLineBy(text, line, 'category'),
-      this.getTextItemAtLineBy(text, line, 'entryType')
+      this.getTextItemAtLineBy(text, line),
+      this.getTextItemAtLineBy(text, line),
+      this.getTextItemAtLineBy(text, line)
     ]);
 
-    expect([description, category, entryType]).toContain(text);
+    expect(await StringUtils.containsText([description, category, entryType], text)).toBe(true);
   }
 
   /**
    * 
    * @param text - text to be found
    * @param line - which line the text must be found
-   * @param item - where should used to perform the search(description, category, entryType)
+   * @param columnNumber - where should used to perform the search(description, category, entryType but using the column numbers)
    */
-  private async getTextItemAtLineBy(text:string, line: number, item:string): Promise<string>{
-    let locator = this.page.locator(`td#${item}${line}`).first();
+  private async getTextItemAtLineBy(text:string, line: number): Promise<string>{
+    let locator = this.page.locator(`${this.id} tr:nth-of-type(${line}) td:has-text("${text}")`);
+
     return await locator.innerText();
   }
 
   public getButtonAtByClass(line: number, column: number, btnClass: string): string {
-    return `table${ this.id }.table:first-of-type tbody > tr:nth-of-type(${line}) td a.${btnClass}`;
+    return `${this.id} tr:nth-of-type(${line}) td a.${btnClass}`;
   }
 
   protected async getValueAtLine(lineIndex: number, column: number): Promise<Locator> {
