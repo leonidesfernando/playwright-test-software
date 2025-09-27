@@ -3,18 +3,19 @@ import * as genData from "@faker-js/faker";
 
 let CATEGORIES:string[] = ['FOOD', 'WAGE', 'LEISURE'
                   , 'PHONE_INTERNET', 'CAR', 'LOAN'
-                  ,'CLOTHING', 'INVESTIMENTS', 'OTHER']
+                  ,'CLOTHING', 'INVESTMENTS', 'OTHER']
 
 let tiposLancamento = new Map();
-tiposLancamento.set(['INVESTIMENTS','OTHER'],['TRANSF']);
+tiposLancamento.set(['INVESTMENTS','OTHER'],['TRANSF']);
 tiposLancamento.set(['WAGE', 'OTHER'], ['INCOME']);
-tiposLancamento.set(CATEGORIES.filter(c => c != 'INVESTIMENTOS' && c != 'WAGE'), ['EXPENSE']);
+tiposLancamento.set(CATEGORIES.filter(c => c != 'INVESTMENTS' && c != 'WAGE'), ['EXPENSE']);
 
 
 export const DataGen = {
 
   getCategory(){
-    return getAny(CATEGORIES);
+    const cat = getAny(CATEGORIES)
+    return cat;
   },
 
   getTipoLancamento(category: string){

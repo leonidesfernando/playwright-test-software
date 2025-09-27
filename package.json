@@ -8,7 +8,7 @@
   "license": "MIT",
   "devDependencies": {
     "@faker-js/faker": "^7.5.0",
-    "@playwright/test": "^1.49.0",
+    "@playwright/test": "^1.55",
     "@types/mocha": "^9.1.1",
     "@typescript-eslint/eslint-plugin": "^5.37.0",
     "allure-commandline": "^2.32.0",
@@ -26,6 +26,7 @@
     "lint": "npx standard",
     "lint:fix": "npx standard --fix",
     "test": "npx playwright test",
+    "report": "npx playwright show-report",
     "clean": "rimraf dist/*, test-results/*, allure-results/*, playwright-report/*",
     "build": "npm run clean && tsc",
     "allure:generate": "npx allure generate ./allure-results --clean",

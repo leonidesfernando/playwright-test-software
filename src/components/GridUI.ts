@@ -63,4 +63,9 @@ export class GridUI extends BaseUI{
     return await this.page.locator(`#description1`).count() > 0;
   }
 
+  public async getNumberOfElements(): Promise<number>{
+    const rows = this.page.locator(`${this.id} tbody tr`);
+    return await rows.count();
+  }
+
 }

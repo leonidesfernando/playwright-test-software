@@ -4,6 +4,7 @@ import { GridUI } from "../components/GridUI";
 import { BasePage } from "./BasePage";
 import { EntryPage } from "./EntryPage";
 import { DashboradPage } from "./DashboardPage";
+import { RemoveAllModalPage } from "./RemoveAllModalPage";
 
 enum Button {
     EDIT = 'btn-primary',
@@ -17,9 +18,11 @@ export class EntryListPage extends BasePage {
     private readonly btnDashboard !: Locator;
     private readonly btnRemoveAll !: Locator;
     private readonly btnReload !: Locator;
+    private readonly modalRemoveAll !: RemoveAllModalPage;
 
     constructor(page: Page){
         super(page);
+        this.modalRemoveAll = new RemoveAllModalPage(page);
         this.btnNewEntry = this.getBy('#novoLancamento');
         this.inputSearch = this.getBy('#itemBusca');
         this.btnDashboard = this.getBy("a[title='Dashboard']");
@@ -33,13 +36,7 @@ export class EntryListPage extends BasePage {
 
     public async clickRemoveAllButton(removeAll:boolean): Promise<void> {
         await this.btnRemoveAll.click();
-        if(removeAll){
-            const btnRemoveAll = this.getBy('#btnYesRemoveAll');
-            await btnRemoveAll.click();
-        }else{
-            const cancelRemoveAll = this.getBy('#btnCancelRemoveAll');
-            await cancelRemoveAll.click()
-        }
+        await this.modalRemoveAll.removeAll(removeAll);
     }
 
     public async openFirstToEdit():Promise<EntryPage> {
@@ -56,6 +53,11 @@ export class EntryListPage extends BasePage {
     public async listMustBeEmpty():Promise<void>{
         let grid = await this.getGrid();
         await grid.mustBeEmpty();
+    }
+
+    public async listMustBeNotEmpty(nItems: number): Promise<void> {
+        const grid = await this.getGrid();
+        expect(await grid.getNumberOfElements()).toBeGreaterThanOrEqual(nItems)
     }
 
     protected async clickButton(btn: Button): Promise<void>{

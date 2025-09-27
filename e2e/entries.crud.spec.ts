@@ -40,10 +40,15 @@ test.describe('CRUD - Add, Edit and Remove an entry',() => {
         await entryListPage.findEntry('PlayWright');
     })
 
-    test.skip('Removing all entries - YES', async ({page}) => {
+    test('Removing all entries - NO', async ({page}) => {
+        const entryListPage = new EntryListPage(page);
+        await entryListPage.clickRemoveAllButton(false);
+        await entryListPage.listMustBeNotEmpty(2);
+    })
+
+    test('Removing all entries - YES', async ({page}) => {
         const entryListPage = new EntryListPage(page);
         await entryListPage.clickRemoveAllButton(true);
-        await entryListPage.clickReloadButton();
         await entryListPage.listMustBeEmpty();
     })
 })

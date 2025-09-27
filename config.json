@@ -1,12 +1,14 @@
 {
   "prod": {
     "baseUrl": "http://localhost:8080",
+    "language": "EN",
     "username": "",
     "password": ""
   },
   "test": {
-    "baseUrl": "http://localhost:8080",
-    "username": "",
-    "password": ""
+    "baseUrl": "http://localhost:5173",
+    "language": "EN",
+    "username": "user",
+    "password": "a"
   }
 }

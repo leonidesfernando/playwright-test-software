@@ -22,6 +22,10 @@ export function getPassword(): string {
   return configuration.password;
 }
 
+export function getLanguage(): string{
+  return configuration.language;
+}
+
 function getConfig(): any {
   return config[env];
 }

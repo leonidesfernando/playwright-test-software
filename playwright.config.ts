@@ -48,7 +48,7 @@ const config: PlaywrightTestConfig = {
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
     screenshot: 'only-on-failure', // Capture screenshot after each test failure.
-    video: 'retain-on-failure', //Record video only when retrying a test for the first time.
+    video: 'on', //Record video only when retrying a test for the first time.
     headless: true,
     viewport: null,
     launchOptions: {
@@ -60,7 +60,7 @@ const config: PlaywrightTestConfig = {
   /* Configure projects for major browsers */
   projects: [
     { name: 'setup', testMatch: /.*\.setup\.ts/ },
-    /*{
+    {
       name: 'chromium',
       use: {
         //...devices['Desktop Chrome'],
@@ -68,9 +68,9 @@ const config: PlaywrightTestConfig = {
         viewport: null
       },
       dependencies: ['setup'],
-    },*/
+    },
 
-    {
+    /*{
       name: 'firefox',
       use: {
         //...devices['Desktop Firefox'],
@@ -78,7 +78,7 @@ const config: PlaywrightTestConfig = {
         viewport:null
       },
       dependencies: ['setup'],
-    },
+    },*/
 
 /*    {
       name: 'webkit',
