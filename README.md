@@ -1,11 +1,11 @@
 # playwright-test-software
-Project to explore Playwright.dev in e2e tests and some plugins such as allure-playwright, faker, etc. All tests were built to run against a simple web application in the [teste-software-ui](https://github.com/leonidesfernando/test-software-ui) repository. 
+Project to explore Playwright.dev in e2e and API tests and some plugins such as allure-playwright, faker, etc. All tests were built to run against a simple web application in the [teste-software-ui](https://github.com/leonidesfernando/test-software-ui) repository. 
 
 
 ## Requeriments 
 - [NodeJS](https://nodejs.org/) v20.10.0
 - NPM 10.9.0+
-- [PlayWright](https://playwright.dev/) 1.49.0
+- [PlayWright](https://playwright.dev/) 1.55
 
 
 ## Environment
@@ -15,7 +15,9 @@ So, before you run, you must define the target environment and setup the data in
 
 ## Run
 Beyond the web app running you can run the command:
-> `npm run test`
+> `npm run test` - to run all tests e2e and API  
+> `npm run api`  - to run only API tests  
+> `npm run e2e`  - to run only e2e tests
 
 ### Clean generated files
 `npm` run clean
