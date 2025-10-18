@@ -26,6 +26,8 @@
     "lint": "npx standard",
     "lint:fix": "npx standard --fix",
     "test": "npx playwright test",
+    "api": "npx playwright test --project=api",
+    "e2e": "npx playwright test --project=e2e",
     "report": "npx playwright show-report",
     "clean": "rimraf dist/*, test-results/*, allure-results/*, playwright-report/*",
     "build": "npm run clean && tsc",

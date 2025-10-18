@@ -11,6 +11,11 @@ export function getBaseUrl(): string {
   return configuration.baseUrl;
 }
 
+export function getBaseApiUrl(): string {
+  validate(configuration.baseApiUrl, 'baseApiUrl');
+  return configuration.baseApiUrl;
+}
+
 export function getUsername(): string {
 
   validate(configuration.username, 'username');
