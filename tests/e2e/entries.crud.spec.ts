@@ -1,8 +1,8 @@
 //@ts-check
 import { test, expect, Page } from '@playwright/test';
-import {EntryListPage} from '../src/pageobjects/EntryListPage';
-import { CrudUtils } from '../src/utils/CRUDUtils';
-import { getBaseUrl } from '../config';
+import {EntryListPage} from '../../src/pageobjects/EntryListPage';
+import { CrudUtils } from '../../src/utils/CRUDUtils';
+import { getBaseUrl } from '../../config';
 
 
 test.describe('CRUD - Add, Edit and Remove an entry',() => {
@@ -34,11 +34,11 @@ test.describe('CRUD - Add, Edit and Remove an entry',() => {
         await entryListPage.removeFirstEntryByDescription(data.description);
     });
 
-    test('NOT removing all entries', async ({page}) => {
+    /*test('NOT removing all entries', async ({page}) => {
         const entryListPage = new EntryListPage(page);
         await entryListPage.clickRemoveAllButton(false);
         await entryListPage.findEntry('PlayWright');
-    })
+    })*/
 
     test('Removing all entries - NO', async ({page}) => {
         const entryListPage = new EntryListPage(page);

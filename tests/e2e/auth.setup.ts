@@ -1,6 +1,6 @@
 import { test as setup, expect } from '@playwright/test';
-import {LoginHelper} from '../src/helper/LoginHelper';
-import { getBaseUrl, getLanguage } from '../config.ts'
+import {LoginHelper} from '../../src/helper/LoginHelper';
+import { getBaseUrl, getLanguage } from '../../config'
 
 const authFile = 'playwright/.auth/user.json';
 

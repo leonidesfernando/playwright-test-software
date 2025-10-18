@@ -17,8 +17,9 @@ https://talent500.co/blog/how-to-integrate-cucumber-with-playwright/
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
+
 const config: PlaywrightTestConfig = {
-  testDir: './e2e',
+  testDir: './tests',
   /* Maximum time one test can run for. */
   timeout: 30 * 1000,
   expect: {
@@ -29,15 +30,17 @@ const config: PlaywrightTestConfig = {
     timeout: 10000
   },
   /* Run tests in files in parallel */
-  fullyParallel: false,
+  fullyParallel: true,
+  /* script that runs after all tests in the suite finish, regardless of parallel execution. */
+  globalTeardown: './global-teardown.ts',
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  workers: process.env.CI ? 2 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: [['html'],['allure-playwright']],
+  reporter: [['html'],['allure-playwright'],['list']],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
@@ -61,11 +64,29 @@ const config: PlaywrightTestConfig = {
   projects: [
     { name: 'setup', testMatch: /.*\.setup\.ts/ },
     {
+      name: 'api',
+       testDir: './tests/api',
+      use: {
+        viewport: null
+      }
+    },
+    /*{
       name: 'chromium',
       use: {
         //...devices['Desktop Chrome'],
         storageState: 'playwright/.auth/user.json',
         viewport: null
+      },
+      dependencies: ['setup'],
+    },*/
+    {
+      name: 'e2e',
+      testDir: './tests/e2e',
+      use: {
+        //browserName: 'chromium',
+        //...devices['Desktop Chrome'],
+        storageState: 'playwright/.auth/user.json',
+        //viewport: null
       },
       dependencies: ['setup'],
     },
