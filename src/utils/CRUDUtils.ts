@@ -27,7 +27,8 @@ export const CrudUtils = {
             description: `${DataGen.productName()} ${await PlaywrightUtils.getBrowserName()} on ${date} - ${DataGen.number()}`,
             entryDate: date,
             entryType: DataGen.getTipoLancamento(localCategory) as EntryPayload['entryType'],
-            userId: ''
+            userId: '',
+            id:0
         };
         return data;
         
@@ -37,6 +38,7 @@ export const CrudUtils = {
         const data:{date:'', description:'', value:'', category:'', typeEntry:''} = await CrudUtils.genCrudDataOld();
         const entryPage = await entryListPage.newEntry();
         await entryPage.saveEntry(data.description, data.date, data.value, data.category, data.typeEntry);
+        await entryListPage.closeEntryRegistrySuccessAlert();
         return data;
     }
 

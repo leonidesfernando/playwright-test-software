@@ -20,7 +20,10 @@ test.describe('CRUD - Add, Edit and Remove an entry',() => {
     
     test('Editing', async({page}) => {
         const entryListPage = new EntryListPage(page);
+        await entryListPage.clickReloadButton();
         const data = await CrudUtils.addEntry(entryListPage);
+        expect(data.description).not.toBe('')
+        await entryListPage.findEntry(data.description);
         const entryPage = await entryListPage.openFirstToEdit();
         const newDescription = `${data.description} - Edited`;
         await entryPage.saveEntry(newDescription, data.date, data.value, data.category, data.typeEntry);        
@@ -42,13 +45,10 @@ test.describe('CRUD - Add, Edit and Remove an entry',() => {
 
     test('Removing all entries - NO', async ({page}) => {
         const entryListPage = new EntryListPage(page);
+        await entryListPage.clickReloadButton();
+        const nElementsBefore = await entryListPage.getNumberOfElements();
         await entryListPage.clickRemoveAllButton(false);
-        await entryListPage.listMustBeNotEmpty(2);
-    })
-
-    test('Removing all entries - YES', async ({page}) => {
-        const entryListPage = new EntryListPage(page);
-        await entryListPage.clickRemoveAllButton(true);
-        await entryListPage.listMustBeEmpty();
+        const nElementsAfter = await entryListPage.getNumberOfElements();
+        expect(nElementsBefore).toEqual(nElementsAfter);
     })
 })

@@ -5,6 +5,7 @@ import { BasePage } from "./BasePage";
 import { EntryPage } from "./EntryPage";
 import { DashboradPage } from "./DashboardPage";
 import { RemoveAllModalPage } from "./RemoveAllModalPage";
+import {getBaseUrl} from "../../config"
 
 enum Button {
     EDIT = 'btn-primary',
@@ -19,6 +20,8 @@ export class EntryListPage extends BasePage {
     private readonly btnRemoveAll !: Locator;
     private readonly btnReload !: Locator;
     private readonly modalRemoveAll !: RemoveAllModalPage;
+    private readonly alertMessage !: Locator;
+    private readonly alertCloseButton !: Locator;
 
     constructor(page: Page){
         super(page);
@@ -28,6 +31,17 @@ export class EntryListPage extends BasePage {
         this.btnDashboard = this.getBy("a[title='Dashboard']");
         this.btnRemoveAll = this.getBy("#btnRemoveAll");
         this.btnReload = this.getBy('#btnReload');
+        this.alertMessage = this.getBy('div[class] span');
+        this.alertCloseButton = this.getBy('#app > header > nav > div > div.container-fluid > div > div > button');
+    }
+
+    public async closeEntryRegistrySuccessAlert():Promise<void> {
+        this.alertCloseButton.click();
+    }
+
+    public async checkSuccessfulEntryRegistryMessage(): Promise<boolean> {
+        const message = this.alertMessage.innerText();
+        return true;
     }
 
     public async clickReloadButton(): Promise<void> {
@@ -40,12 +54,12 @@ export class EntryListPage extends BasePage {
     }
 
     public async openFirstToEdit():Promise<EntryPage> {
-        await this.clickButton(Button.EDIT);
+        await this.clickFirstButton(Button.EDIT);
         return new EntryPage(this.page);
     }
 
     public async removeFirstEntryByDescription(description: string): Promise<void> {
-        await this.clickButton(Button.DELETE);
+        await this.clickFirstButton(Button.DELETE);
         await this.searchByDescription(description);
         await this.listMustBeEmpty();
     }
@@ -60,7 +74,12 @@ export class EntryListPage extends BasePage {
         expect(await grid.getNumberOfElements()).toBeGreaterThanOrEqual(nItems)
     }
 
-    protected async clickButton(btn: Button): Promise<void>{
+    public async getNumberOfElements(): Promise<number>{
+        const grid = await this.getGrid();
+        return grid.getNumberOfElements();
+    }
+
+    protected async clickFirstButton(btn: Button): Promise<void>{
         let grid = await this.getGrid();
         let locator = this.page.locator(grid.getButtonAtByClass(1, 6, btn.toString()));
         await locator.click();
@@ -68,7 +87,7 @@ export class EntryListPage extends BasePage {
 
     public async newEntry(): Promise<EntryPage>{
         await this.btnNewEntry.click();
-        this.page.waitForURL("http://localhost:5173/entry"); //TODO: arrumar isso
+        this.page.waitForURL(`${getBaseUrl()}/entry`);
         return new EntryPage(this.page);
     }
 

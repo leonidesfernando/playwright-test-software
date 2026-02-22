@@ -61,10 +61,10 @@ export class EntryPage extends BasePage {
           case 'TRANSF':
             this.radioTransf.click();
             break;
-          case 'RENDA':
+          case 'INCOME':
             this.radioIncome.click();
             break;
-          case 'DESPESA':
+          case 'EXPENSE':
             this.radioSpent.click();
             break;
         }

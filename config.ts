@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import config from './config.json';
+import config from './config-data.json';
 
 
 const env: string = process.env.ENV_NAME || 'test';
