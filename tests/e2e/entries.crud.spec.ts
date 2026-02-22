@@ -26,7 +26,9 @@ test.describe('CRUD - Add, Edit and Remove an entry',() => {
         await entryListPage.findEntry(data.description);
         const entryPage = await entryListPage.openFirstToEdit();
         const newDescription = `${data.description} - Edited`;
-        await entryPage.saveEntry(newDescription, data.date, data.value, data.category, data.typeEntry);        
+        await entryPage.saveEntry(newDescription, data.date, data.value, data.category, data.typeEntry);
+        await entryListPage.clickReloadButton();
+        await entryListPage.searchByDescription(data.description);
         await entryListPage.findEntry(newDescription);
     });
 

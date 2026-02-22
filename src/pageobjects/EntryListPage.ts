@@ -97,7 +97,7 @@ export class EntryListPage extends BasePage {
         await grid.findItemAt(description, 1);
     }
 
-    private async searchByDescription(description: string): Promise<void>{
+    public async searchByDescription(description: string): Promise<void>{
         expect(description).not.toBeNull();
         await expect(this.page).toHaveURL(/entries/);
         await this.inputSearch.fill('');
