@@ -31,7 +31,6 @@ export class GridUI extends BaseUI{
    */
   private async getTextItemAtLineBy(text:string, line: number): Promise<string>{
     let locator = this.page.locator(`${this.id} tr:nth-of-type(${line}) td:has-text("${text}")`);
-
     return await locator.innerText();
   }
 
@@ -43,6 +42,11 @@ export class GridUI extends BaseUI{
     const str = this.getLineSelector(lineIndex, column);
     expect(str).not.toBeNull()
     return  this.page.locator(str);
+  }
+
+  public async getCellBy(line: number, column: number): Promise<string>{
+    const locator = this.page.locator(`${this.id} > table > tbody > tr:nth-of-type(${line}) > td:nth-child(${column})`);
+    return locator.innerText();
   }
 
   private getLineSelector(lineIndex: number, column: number): string {
